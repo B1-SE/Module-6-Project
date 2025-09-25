@@ -55,11 +55,32 @@ class Character:
 class Warrior(Character):
     def __init__(self, name):
         super().__init__(name, health=140, attack_power=25)
+        self.shield_block_active = False
+
+    def special_ability(self, opponent):
+        print("\nAbilities:")
+        print("1. Heroic Strike (Bonus Damage)")
+        print("2. Shield Block (Reduce next attack's damage)")
+        action = input("Which ability do you want to use? ")
+        if action == "1":
+            # Heroic Strike: A powerful attack with bonus damage
+            bonus_damage = random.randint(10, 20)
+            total_damage = self.attack_power + bonus_damage
+            opponent.health -= total_damage
+            print(f"{self.name} uses Heroic Strike on {opponent.name} for {total_damage} damage!")
+        elif action == "2":
+            # Shield Block: Reduce damage from the next incoming attack
+            self.shield_block_active = True
+            print(f"{self.name} raises their shield, preparing to block part of the next attack!")
 
 # Mage class (inherits from Character)
 class Mage(Character):
     def __init__(self, name):
         super().__init__(name, health=100, attack_power=35)
+
+    def special_ability(self, opponent):
+        # For now, a simple message. You can expand this with more abilities.
+        print(f"{self.name} channels arcane energy but has not yet mastered any special abilities.")
 
 # EvilWizard class (inherits from Character)
 class EvilWizard(Character):
@@ -228,4 +249,3 @@ if __name__ == "__main__":
     player2 = classes.get(p2_class, Warrior)(p2_name)
 
     battle(player1, player2)
-
